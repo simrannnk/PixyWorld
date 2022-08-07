@@ -1,3 +1,6 @@
+# What is PixyWorld ?
+PixyWorls is an image exploation web application which helps the user to fetch images easily.The application uses the unsplash api -https://unsplash.com/documentation
+to get the images.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
