@@ -1,38 +1,48 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './navbar.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./navbar.css";
+const ImageTags = [
+  "Editorial",
+  "Current Events",
+  "3D Renders",
+  "Textures & Patterns",
+  "Food & Drink",
+  "Nature",
+  "Animal",
+  "History",
+];
 const Navbar = ({ passData2 }) => {
   const [tagName, setTagName] = useState("");
   const [searchTag, setSearchTag] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [imageTag, setImageTag] = useState([]);
 
   const handleClick = (e) => {
     setTagName(e.target.textContent);
-    console.log(e.target.textContent);
-     setIsClicked(true);
     axios
       .get(
         `https://api.unsplash.com/search/photos?client_id=XH07Mf7_whm2ewveZCJ7oRQD84HeGl-XDmu5fFk6Pv4&query=${e.target.textContent}&per_page=50`
       )
       .then((res) => {
-        setSearchTag(res.data.results);
+        passData2(res.data.results, true);
       });
   };
 
-  useEffect(() => {
-    console.log(tagName); 
-  },[tagName])
-
-  passData2(searchTag,isClicked);
   return (
     <div className="nav">
       <ul className="navList">
-        <li
-          className={`navItem ${isClicked ? "isActive" : ""}`}
-          onClick={handleClick}
-        >
-          <a href="#">Editorial</a>
-        </li>
+        {ImageTags.map((tag, idx) => {
+          return (
+            <li
+              className={`navItem ${tag === tagName ? "isActive" : ""}`}
+              key={idx}
+              onClick={handleClick}
+            >
+              <a href="#">{tag}</a>
+            </li>
+          );
+        })}
+        {/*        
         <li className={`navItem ${isClicked ? "isActive" : ""}`}>
           <a href="#" onClick={handleClick}>
             Current Events
@@ -107,7 +117,7 @@ const Navbar = ({ passData2 }) => {
           <a href="#" onClick={handleClick}>
             Art & Culture
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
-import "./images.css"
+import "./images.css";
 import axios from "axios";
 const Images = ({ isSearch, ImageSearch, searchTagImage, tagClicked }) => {
   const [images, setImages] = useState([]);
@@ -20,53 +20,64 @@ const Images = ({ isSearch, ImageSearch, searchTagImage, tagClicked }) => {
   };
 
   return (
-      <div className="allImages">
-      {!isSearch && !tagClicked ? (
-        <InfiniteScroll
-          dataLength={images.length}
-          next={fetchImages}
-          hasMore={true}
-        >
+    <div className="allImages">
+      {console.log(
+        isSearch,
+        tagClicked,
+        ImageSearch,
+        searchTagImage,
+        !isSearch && !tagClicked
+      )}
+      {
+        !isSearch && !tagClicked ? (
+          <InfiniteScroll
+            dataLength={images.length}
+            next={fetchImages}
+            hasMore={true}
+          >
+            <div className="images-container">
+              {images.map((item) => {
+                return (
+                  <img
+                    src={item.urls.regular}
+                    alt=""
+                    key={item.id}
+                    className="unsplash-images"
+                  ></img>
+                );
+              })}
+            </div>
+          </InfiniteScroll>
+        ) : (
           <div className="images-container">
-            {images.map((item) => {
+            {console.log("mai chala")}
+            {ImageSearch.map((items) => {
               return (
                 <img
-                  src={item.urls.regular}
+                  src={items.urls.regular}
                   alt=""
-                  key={item.id}
+                  key={items.id}
                   className="unsplash-images"
                 ></img>
               );
             })}
           </div>
-        </InfiniteScroll>
-      ) : !isSearch && tagClicked ? (
-        <div className="images-container">
-          {searchTagImage.map((items) => {
-            return (
-              <img
-                src={items.urls.regular}
-                alt=""
-                key={items.id}
-                className="unsplash-images"
-              ></img>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="images-container">
-          {ImageSearch.map((items) => {
-            return (
-              <img
-                src={items.urls.regular}
-                alt=""
-                key={items.id}
-                className="unsplash-images"
-              ></img>
-            );
-          })}
-        </div>
-      )}
+        )
+        //           (
+        // <div className="images-container">
+        //   {ImageSearch.map((items) => {
+        //     return (
+        //       <img
+        //         src={items.urls.regular}
+        //         alt=""
+        //         key={items.id}
+        //         className="unsplash-images"
+        //       ></img>
+        //     );
+        //   })}
+        // </div>
+        //   )
+      }
     </div>
   );
 };

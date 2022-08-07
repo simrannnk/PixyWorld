@@ -1,8 +1,8 @@
-import "./header.css"
+import "./header.css";
 import unsplashLogo from "../../assets/unsplash Logo.png";
 import { BiSearch } from "react-icons/bi";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const Header = ({ passData }) => {
   const [value, setValue] = useState("");
@@ -14,12 +14,15 @@ const Header = ({ passData }) => {
         `https://api.unsplash.com/search/photos?client_id=XH07Mf7_whm2ewveZCJ7oRQD84HeGl-XDmu5fFk6Pv4&query=${value}&per_page=20`
       )
       .then((res) => {
-        console.log("ghghjhj")
-        setSearchImages([...searchImages,...res.data.results]);
+        console.log("ghghjhj");
+        setSearchImages([...searchImages, ...res.data.results]);
+        passData(value, res.data.results);
       });
   };
+  const handleOnChange = (e) => {
+    setValue(e.target.value);
+  };
 
-  passData(value,searchImages);
   return (
     <header className="header-container">
       <div className="unsplashLogo">
@@ -29,7 +32,7 @@ const Header = ({ passData }) => {
         <BiSearch />
         <input
           placeholder="Search free high-resolution photos"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleOnChange}
           value={value}
         ></input>
       </div>
@@ -61,6 +64,6 @@ const Header = ({ passData }) => {
       </div>
     </header>
   );
-}
+};
 
 export default Header;
